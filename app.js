@@ -2,7 +2,6 @@ const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 const {createElement, getElementById} = require('./utils');
-//app.use(express.json());
 
 const total_budget = 0;
 let envelopes = [];
@@ -37,14 +36,12 @@ app.get('/envelopes', (req, res, next) => {
 app.get('/envelopes/:id', (req, res, next) => {
     const foundEnvelope = getElementById(req.params.id, envelopes);
     if (foundEnvelope) {
-        res.send(foundEnvelope)
+        res.send(foundEnvelope);
     } else {
         res.status(404).send();
     }
     next();
 });
-
-
 
 
 
