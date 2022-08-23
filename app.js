@@ -48,9 +48,9 @@ app.put('/envelopes/:id', (req, res, next) => {
     if (envelopeIndex !== -1){
         updateElement(req.params.id, req.body, envelopes);
         //res.send(envelopes[envelopeIndex]);
-        //if (req.query.hasOwnProperty('spent')) {
-          //  envelopes[envelopeIndex].budget = Number(envelopes[envelopeIndex].budget) - Number(req.query.spent);
-        //}
+        if (req.body.hasOwnProperty('spent')) {
+            (envelopes[envelopeIndex]).budget = Number((envelopes[envelopeIndex]).budget) - Number(req.body.spent);
+        }
         res.send(envelopes[envelopeIndex]);
     }
     else {
