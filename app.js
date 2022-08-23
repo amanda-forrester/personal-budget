@@ -47,7 +47,6 @@ app.put('/envelopes/:id', (req, res, next) => {
     const envelopeIndex = getIndexById(req.params.id, envelopes);
     if (envelopeIndex !== -1){
         updateElement(req.params.id, req.body, envelopes);
-        //res.send(envelopes[envelopeIndex]);
         if (req.body.hasOwnProperty('spent')) {
             (envelopes[envelopeIndex]).budget = Number((envelopes[envelopeIndex]).budget) - Number(req.body.spent);
         }
@@ -69,6 +68,20 @@ app.delete('/envelopes/:id', (req, res, next) => {
   }
 });
 
+app.post('/envelopes/transfer/:from/:to', (req, res, next) => {
+    const envelopeOneIndex = getIndexById(req.params.from, envelopes);
+    const envelopeTwoIndex = getIndexById(req.params.to, envelopes);
+    if (envelopeOneIndex !== -1 && envelopeTwoIndex !== -1){
+        (envelopes[envelopeOneIndex]).budget = Number((envelopes[envelopeOneIndex]).budget) - Number(req.header('transferAmount'));
+        (envelopes[envelopeTwoIndex]).budget = Number((envelopes[envelopeTwoIndex]).budget) + Number(req.header('transferAmount'));
+        //res.send(envelopes[envelopeOneIndex], envelopes[envelopeTwoIndex]);
+        res.status(200).send();
+    }
+    else {
+        res.status(404).send();
+    }
+    next();
+});
 
 
 app.listen(PORT, () => {
