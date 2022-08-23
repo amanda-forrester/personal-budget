@@ -21,4 +21,25 @@ const getElementById = (id, listElements) => {
     });
 };
 
-module.exports = {createElement: createElement, getElementById: getElementById};
+const getIndexById = (id, listElements) => {
+    return listElements.findIndex((element) => {
+        return element.id === Number(id);
+    })
+}
+
+const updateElement = (id, queryArgs, listElements) => {
+    const indexElement = getIndexById(id, listElements);
+    if (indexElement === -1){
+        throw new Error('updateElement requires a valid id');
+    }
+    if (queryArgs.id) {
+        queryArgs.id = Number(queryArgs.id);
+    }
+    Object.assign(listElements[indexElement], queryArgs);
+    return listElements[indexElement];
+}
+
+
+
+module.exports = {createElement: createElement, getElementById: getElementById,
+                getIndexById:getIndexById, updateElement:updateElement};

@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
-const {createElement, getElementById} = require('./utils');
+const {createElement, getElementById, getIndexById, updateElement} = require('./utils');
 
 const total_budget = 0;
 let envelopes = [];
@@ -43,8 +43,24 @@ app.get('/envelopes/:id', (req, res, next) => {
     next();
 });
 
+app.put('/envelopes/:id', (req, res, next) => {
+    const envelopeIndex = getIndexById(req.params.id, envelopes);
+    if (envelopeIndex !== -1){
+        updateElement(req.params.id, req.body, envelopes);
+        //res.send(envelopes[envelopeIndex]);
+        //if (req.query.hasOwnProperty('spent')) {
+          //  envelopes[envelopeIndex].budget = Number(envelopes[envelopeIndex].budget) - Number(req.query.spent);
+        //}
+        res.send(envelopes[envelopeIndex]);
+    }
+    else {
+        res.status(404).send();
+    }
+    next();
+});
+
 
 
 app.listen(PORT, () => {
     console.log(`Server is listening on port ${PORT}`);
-})
+});
