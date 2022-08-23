@@ -59,6 +59,16 @@ app.put('/envelopes/:id', (req, res, next) => {
     next();
 });
 
+app.delete('/envelopes/:id', (req, res, next) => {
+  const envelopeIndex = getIndexById(req.params.id, envelopes);
+  if (envelopeIndex !== -1) {
+    envelopes.splice(envelopeIndex, 1);
+    res.status(204).send();
+  } else {
+    res.status(404).send();
+  }
+});
+
 
 
 app.listen(PORT, () => {
