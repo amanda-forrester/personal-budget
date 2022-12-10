@@ -2,13 +2,18 @@ const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 const {createElement, getElementById, getIndexById, updateElement} = require('./utils');
+//import dotenv from "dotenv";
+
+//dotenv.config();
+
+const db = require('./queries')
 
 const total_budget = 0;
 let envelopes = [];
 
 app.use(bodyParser.json());
 
-const PORT = process.env.PORT || 3001;
+const PORT = 3001;
 
 app.get('/', (req, res, next) => {
     res.send('Hello, World');
@@ -27,11 +32,12 @@ app.post('/envelopes', (req, res, next) => {
     next();
 });
 
+app.get('/envelopes', db.getEnvelopes);
 
-app.get('/envelopes', (req, res, next) => {
+/*app.get('/envelopes', (req, res, next) => {
     res.send(envelopes);
     next();
-});
+});*/
 
 app.get('/envelopes/:id', (req, res, next) => {
     const foundEnvelope = getElementById(req.params.id, envelopes);
