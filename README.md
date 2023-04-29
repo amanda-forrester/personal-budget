@@ -1,7 +1,7 @@
 # personal-budget
 An API to accomplish envelope budgeting
 
-##Usage
+## Usage
 To use this API, use the following endpoints:
 
 1. **GET** - 1. **/envelopes** gets all 2. **/envelopes/:id** gets specific envelope based on the id
